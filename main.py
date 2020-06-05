@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import FastAPI
 from app.routers import users
 from app.database import models
 from app.database.database import engine
