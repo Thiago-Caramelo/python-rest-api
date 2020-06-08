@@ -22,7 +22,7 @@ def read_user(user_id: UUID, db: Session = Depends(session.get_db)):
     return db_user
 
 
-@router.post("/users/", tags=["users"], response_model=UserSchema)
+@router.post("/users/", tags=["users"], response_model=UserSchema, status_code=201)
 def create_user(newUser: UserSchema, db: Session = Depends(session.get_db)):
     db_user = user.get_user_by_email(db, email=newUser.email)
     if db_user:
