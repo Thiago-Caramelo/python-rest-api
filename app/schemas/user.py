@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import uuid
 
 
-class User(BaseModel):
+class UserSchema(BaseModel):
     id: uuid.UUID
     email: str
     is_active: bool
