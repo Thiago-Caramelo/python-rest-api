@@ -1,9 +1,10 @@
 from typing import List
 from pydantic import BaseModel
+import uuid
 
 
 class User(BaseModel):
-    id: int
+    id: uuid.UUID
     email: str
     is_active: bool
 
