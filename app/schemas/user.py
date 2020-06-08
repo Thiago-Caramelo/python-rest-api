@@ -1,10 +1,10 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 import uuid
 
 
 class UserSchema(BaseModel):
-    id: uuid.UUID
+    id:  Optional[uuid.UUID] = None
     email: str
     is_active: bool
 
