@@ -52,3 +52,14 @@ def test_create_user():
         assert result.id == new_user.id
         assert result.email == new_user.email
         assert result.is_active == new_user.is_active
+
+
+def test_create_user_exists():
+    with patch('app.routers.users.user', autospec=True) as mock_module:
+        existing_user = User(
+            id=uuid4(), email="test@test.com", is_active=True)
+        new_user = UserSchema(
+            id=uuid4(), email="test@test.com", is_active=True)
+        mock_module.get_user_by_email.return_value = existing_user
+        with pytest.raises(HTTPException):
+            users.create_user(newUser=new_user, db=None)
