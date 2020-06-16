@@ -4,6 +4,7 @@ from uuid import uuid4
 import pytest
 from fastapi import HTTPException
 from app.schemas.user import UserSchema
+from app.database.models.user import User
 
 users_result = [{"name": "name goes here"}]
 user_result = {"user": "name"}
@@ -40,9 +41,14 @@ def test_read_user_not_found():
 
 def test_create_user():
     with patch('app.routers.users.user', autospec=True) as mock_module:
+        user_id = uuid4()
         new_user = UserSchema(
-            id=uuid4(), email="test@test.com", is_active=True)
+            id=user_id, email="test@test.com", is_active=True)
+        new_database_user = User(
+            id=user_id, email="test@test.com", is_active=True)
         mock_module.get_user_by_email.return_value = None
-        mock_module.create_user.return_value = new_user
+        mock_module.create_user.return_value = new_database_user
         result = users.create_user(newUser=new_user, db=None)
-        assert result == new_user
+        assert result.id == new_user.id
+        assert result.email == new_user.email
+        assert result.is_active == new_user.is_active
