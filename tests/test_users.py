@@ -1,16 +1,15 @@
-from fastapi.testclient import TestClient
-from main import app
-from json import loads
-from app.schemas.user import UserSchema
+import json
 import uuid
+import fastapi.testclient
+import main
 
-client = TestClient(app)
+client = fastapi.testclient.TestClient(main.app)
 
 
 def test_get_users():
     response = client.get("/users/")
     assert response.status_code == 200
-    assert loads(response.text) != None
+    assert json.loads(response.text) is not None
 
 
 def test_get_user():
